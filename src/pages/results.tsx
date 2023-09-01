@@ -11,7 +11,7 @@ interface YourEntryType {
   timestamp: number;
 }
 
-const Results: React.FunctionComponent<IresultsProps> = (props) => {
+const Results: React.FunctionComponent<IresultsProps> = () => {
   const { score, scoresInSession, resetGame } = useGameContext();
   const [sortedScores, setSortedScores] = useState<YourEntryType[]>([]);
   const router = useRouter();
@@ -77,12 +77,12 @@ const Results: React.FunctionComponent<IresultsProps> = (props) => {
           </div>
         </div>
       </div>
-      <div className="ml-auto mr-auto m-auto  md:mt-4 w-full md:w-3/5 p-3  ">
+      <div className="ml-auto mr-auto m-auto md:mt-4 w-full md:w-3/5 p-3  ">
         <div>
           <h2 className="text-xl text-center ">All of your scores!</h2>
         </div>
-        <ul className="block border rounded border-violet-400   mt-4 md:mt-4  md:h-[80vh] overflow-y-auto  shadow-neon-glow">
-          <li className="flex " key="head">
+        <ul className="block border rounded border-violet-400  bg-gray-900 mt-4 md:mt-4  md:h-[80vh] overflow-y-auto  shadow-neon-glow">
+          <li className="flex" key="head">
             <div className="text-center text-lg py-2 border border-dashed border-violet-400 flex-1  ">
               Timestamp
             </div>
@@ -91,8 +91,8 @@ const Results: React.FunctionComponent<IresultsProps> = (props) => {
             </div>
           </li>
           {sortedScores.length === 0 && (
-            <li className=" flex flex-col justify-center gap-4 items-center  h-[80%]">
-              <h2 className="text-yellow-300 text-3xl">
+            <li className=" flex flex-col justify-center gap-4 items-center p-2 h-[80%]">
+              <h2 className="text-yellow-300 p-2 text-xl md:text-3xl">
                 You have not played a single game!
               </h2>
               <button
@@ -105,7 +105,7 @@ const Results: React.FunctionComponent<IresultsProps> = (props) => {
           )}
           {sortedScores?.map((eachScore) => (
             <li
-              className="flex border py-1 border-violet-400 "
+              className="flex border p-3 md:p-2 border-violet-400"
               key={eachScore.timestamp}
             >
               <div className="text-center flex-1 font-thin text-orange-200 ">

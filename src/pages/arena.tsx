@@ -13,8 +13,6 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
   const { score, timeLimit, updateScore, storeResult } = useGameContext();
 
   const [currentPairIndex, setCurrentPairIndex] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-
   const [timeLeft, setTimeLeft] = useState(timeLimit);
 
   const router = useRouter();
@@ -78,17 +76,20 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-4">
+    <div className="flex flex-col justify-center items-center h-screen gap-4 p-2">
+      <p className="text-sm md:text-lg  font-light text-violet-400 text-center ">
+        Spot the fake by clicking on one of the images
+      </p>
       <div className="flex justify-between w-[75%] md:w-1/2 items-center">
         <div className="text-xl  md:text-3xl lg:text-5xl font-semibold transition-opacity mr-8 w-28">
           <span className="text-yellow-500">&#x265C;</span> {score}
         </div>
         <Progressbar currentSize={timeLeft} totalSize={timeLimit} />
         <div className="text-xl md:text-3xl lg:text-5xl font-semibold transition-opacity ml-8 w-28 text-right">
-          0:{timeLeft}
+          <span className="text-yellow-500 ">&#128337;</span> {timeLeft}
         </div>
       </div>
-      <div className="flex justify-around p-2 flex-wrap gap-5 md:gap-16 md:p-0">
+      <div className="flex justify-around p-2 flex-wrap md:flex-nowrap gap-5 md:gap-16 md:p-0">
         <button
           onClick={() =>
             handleImageSelect(currentPair.correctImage, currentPair.id)
@@ -113,7 +114,7 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
           disabled={timeLeft === 0}
         >
           <Image
-            className="border-4 rounded-md border-violet-300"
+            className="border-4 rounded-md border-violet-300 "
             alt={currentPair.fakeImage}
             src={currentPair.fakeImage}
             width={492}
@@ -122,22 +123,39 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
           />
         </button>
       </div>
-      <div className="min-h-[2rem] mt-2">
+      <div className="md:min-h-[2rem] lg:min-h-[10rem] mt-2">
         {currentPairIndex < totalChances && timeLeft === 0 && (
-          <button
-            className=" border-violet-500 border-2 px-4 py-1 rounded-lg hover:bg-violet-700 shadow-neon-glow"
-            onClick={handleNext}
-          >
-            Lets try another one.
-          </button>
+          <div className="flex flex-col gap-4">
+            <button
+              className=" border-violet-500 border-2 px-4 py-2 rounded-lg hover:bg-violet-700 shadow-neon-glow"
+              onClick={handleNext}
+            >
+              Lets try another one.
+            </button>
+          </div>
         )}
         {currentPairIndex >= totalChances && timeLeft === 0 && (
-          <button
-            className=" border-violet-500 border-2 px-4 py-1 rounded-lg shadow-neon-glow"
-            onClick={redirectToResults}
-          >
-            View result
-          </button>
+          <div className="flex flex-col gap-4 h-[10rem]">
+            <h5 className="text-xl lg:text-5xl text-center font-sans font-extralight text-red-400">
+              GAME OVER
+            </h5>
+            <div className="flex gap-4">
+              <button
+                className=" border-violet-500 border-2 px-4 py-2 rounded-lg shadow-neon-glow hover:bg-violet-500"
+                onClick={redirectToResults}
+              >
+                View all result
+              </button>
+              <button
+                className=" border-gray-500 border-2 px-4 py-1 rounded-lg shadow-soft-elevate hover:bg-gray-500 hover:text-white"
+                onClick={() => {
+                  router.reload();
+                }}
+              >
+                Restart game
+              </button>
+            </div>
+          </div>
         )}
       </div>
       <Toaster />

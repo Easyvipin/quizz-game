@@ -48,7 +48,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   const resetGame = () => {
     setScore(0);
-    router.push("/arena");
+    router.push("/");
   };
 
   const storeResult = (totalScore: number, timestamp: number) => {

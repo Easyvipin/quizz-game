@@ -14,9 +14,9 @@ const Progressbar: React.FunctionComponent<IProgressbarProps> = ({
 
   return (
     <div
-      className={` bg-violet-100 h-6 w-[15rem] rounded-full ${
+      className={` bg-violet-100 h-6 w-[15rem] rounded-full border-2 shadow-neon-glow border-violet-300 ${
         percentage > 0 ? "animate-bounce" : ""
-      }  shadow-xl shadow-violet-500`}
+      }`}
     >
       <div
         className={`bg-violet-500 h-[100%] text-end ${

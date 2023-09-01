@@ -9,7 +9,7 @@ import { emailRegex, nameRegex } from "@src/utils/constants";
 
 interface ISignupProps {}
 
-const Signup: React.FunctionComponent<ISignupProps> = (props) => {
+const Signup: React.FunctionComponent<ISignupProps> = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
