@@ -64,11 +64,6 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
         duration: 1000,
       });
     }
-
-    if (currentPairIndex > totalChances) {
-      // reset the timer to 0 cause game is over
-      setGameOver(true);
-    }
   };
 
   const handleNext = () => {
@@ -93,42 +88,36 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
         </div>
       </div>
       <div className="flex justify-around p-2 flex-wrap gap-5 md:gap-16 md:p-0">
-        {gameOver ? (
-          "Game over"
-        ) : (
-          <>
-            <button
-              onClick={() =>
-                handleImageSelect(currentPair.correctImage, currentPair.id)
-              }
-              className="disabled:cursor-not-allowed"
-              disabled={timeLeft === 0}
-            >
-              <Image
-                className="border-4 rounded-md border-violet-300"
-                alt={currentPair.correctImage}
-                src={currentPair.correctImage}
-                width={500}
-                height={500}
-              />
-            </button>
-            <button
-              onClick={() =>
-                handleImageSelect(currentPair.fakeImage, currentPair.id)
-              }
-              className="disabled:cursor-not-allowed"
-              disabled={timeLeft === 0}
-            >
-              <Image
-                className="border-4 rounded-md border-violet-300"
-                alt={currentPair.fakeImage}
-                src={currentPair.fakeImage}
-                width={500}
-                height={500}
-              />
-            </button>
-          </>
-        )}
+        <button
+          onClick={() =>
+            handleImageSelect(currentPair.correctImage, currentPair.id)
+          }
+          className="disabled:cursor-not-allowed"
+          disabled={timeLeft === 0}
+        >
+          <Image
+            className="border-4 rounded-md border-violet-300"
+            alt={currentPair.correctImage}
+            src={currentPair.correctImage}
+            width={500}
+            height={500}
+          />
+        </button>
+        <button
+          onClick={() =>
+            handleImageSelect(currentPair.fakeImage, currentPair.id)
+          }
+          className="disabled:cursor-not-allowed"
+          disabled={timeLeft === 0}
+        >
+          <Image
+            className="border-4 rounded-md border-violet-300"
+            alt={currentPair.fakeImage}
+            src={currentPair.fakeImage}
+            width={500}
+            height={500}
+          />
+        </button>
       </div>
       <div className="min-h-[2rem] mt-2">
         {currentPairIndex < totalChances && timeLeft === 0 && (
