@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
-import "react-medium-image-zoom/dist/styles.css";
 import { imagesData } from "@src/utils/constants";
 import Progressbar from "@src/components/Progressbar";
 import { useGameContext } from "@src/contexts/GameContext";
