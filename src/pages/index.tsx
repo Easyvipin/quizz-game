@@ -11,7 +11,7 @@ export default function Home() {
       <div className="p-4 md:p-0">
         <motion.h1 className="text-[3rem] md:text-[5rem]">Spot.</motion.h1>
         <h3 className="text-[3rem] md:text-[6rem] text-violet-500 -mt-6 md:-mt-7 font-thin">
-          The
+          The{" "}
           <motion.span
             initial={{ opacity: 0 }} // Initial state, outside the screen to the left
             animate={{ opacity: 1 }}
