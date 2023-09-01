@@ -100,8 +100,8 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
             className="border-4 rounded-md border-violet-300"
             alt={currentPair.correctImage}
             src={currentPair.correctImage}
-            width={500}
-            height={500}
+            width={492}
+            height={276}
             fetchPriority="high"
           />
         </button>
@@ -116,8 +116,8 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
             className="border-4 rounded-md border-violet-300"
             alt={currentPair.fakeImage}
             src={currentPair.fakeImage}
-            width={500}
-            height={500}
+            width={492}
+            height={276}
             fetchPriority="high"
           />
         </button>
