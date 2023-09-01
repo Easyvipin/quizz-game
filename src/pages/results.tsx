@@ -17,15 +17,17 @@ const Results: React.FunctionComponent<IresultsProps> = (props) => {
   const router = useRouter();
 
   useEffect(() => {
-    const allScores = scoresInSession();
+    const allScores: YourEntryType[] = scoresInSession();
 
-    const scoreToEntriesMap: { [score: string]: YourEntryType } =
-      allScores.reduce((map, entry) => {
+    const scoreToEntriesMap = allScores.reduce(
+      (map: { [score: string]: YourEntryType }, entry) => {
         if (!map[entry.score] || entry.timestamp > map[entry.score].timestamp) {
           map[entry.score] = entry;
         }
         return map;
-      }, {});
+      },
+      {}
+    );
 
     const uniqueScoresWithTimestamp = Object.values(scoreToEntriesMap);
 
