@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { imagesData } from "@src/utils/constants";
 import Progressbar from "@src/components/Progressbar";
 import { useGameContext } from "@src/contexts/GameContext";
+import { shuffleArray } from "@src/utils";
 
 interface IArenaProps {}
 
@@ -31,7 +32,7 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
   /* shuffling the image pairs to right and left side randomly */
   const shuffledImagesData = useMemo(
     () =>
-      imagesData.map((pair) => {
+      shuffleArray(imagesData).map((pair) => {
         const randomOrder = Math.random() < 0.5;
         return {
           ...pair,
@@ -101,6 +102,7 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
             src={currentPair.correctImage}
             width={500}
             height={500}
+            fetchPriority="high"
           />
         </button>
         <button
@@ -116,6 +118,7 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
             src={currentPair.fakeImage}
             width={500}
             height={500}
+            fetchPriority="high"
           />
         </button>
       </div>
