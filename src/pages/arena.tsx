@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import { imagesData } from "@src/utils/constants";
-import Progressbar from "@src/components/Progressbar";
 import { useGameContext } from "@src/contexts/GameContext";
-import { shuffleArray } from "@src/utils";
+import { swapImages } from "@src/utils";
+import ClickableImage from "@components/ClickableImage";
+import GameStatusDisplay from "@components/GameStatusDisplay";
+import Button from "@components/Button";
 
 interface IArenaProps {}
 
@@ -27,19 +28,7 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
     }
   }, [timeLeft]);
 
-  /* shuffling the image pairs to right and left side randomly */
-  const shuffledImagesData = useMemo(
-    () =>
-      shuffleArray(imagesData).map((pair) => {
-        const randomOrder = Math.random() < 0.5;
-        return {
-          ...pair,
-          correctImage: randomOrder ? pair.correctImage : pair.fakeImage,
-          fakeImage: randomOrder ? pair.fakeImage : pair.correctImage,
-        };
-      }),
-    []
-  );
+  const shuffledImagesData = useMemo(() => swapImages(), []);
 
   const imagePairs = imagesData;
   const currentPair = shuffledImagesData[currentPairIndex];
@@ -80,58 +69,39 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
       <p className="text-sm md:text-lg  font-light text-violet-400 text-center ">
         Spot the fake by clicking on one of the images
       </p>
-      <div className="flex justify-between w-[75%] md:w-1/2 items-center">
-        <div className="text-xl  md:text-3xl lg:text-5xl font-semibold transition-opacity mr-8 w-28">
-          <span className="text-yellow-500">&#x265C;</span> {score}
-        </div>
-        <Progressbar currentSize={timeLeft} totalSize={timeLimit} />
-        <div className="text-xl md:text-3xl lg:text-5xl font-semibold transition-opacity ml-8 w-28 text-right">
-          <span className="text-yellow-500 ">&#128337;</span> {timeLeft}
-        </div>
-      </div>
+      <GameStatusDisplay
+        score={score}
+        timeLeft={timeLeft}
+        timeLimit={timeLimit}
+      />
       <div className="flex justify-around p-2 flex-wrap md:flex-nowrap gap-5 md:gap-16 md:p-0">
-        <button
+        <ClickableImage
           onClick={() =>
             handleImageSelect(currentPair.correctImage, currentPair.id)
           }
-          className="disabled:cursor-not-allowed"
-          disabled={timeLeft === 0}
-        >
-          <Image
-            className="border-4 rounded-md border-violet-300"
-            alt={currentPair.correctImage}
-            src={currentPair.correctImage}
-            width={492}
-            height={276}
-            fetchPriority="high"
-          />
-        </button>
-        <button
+          src={currentPair.correctImage}
+          alt="website image"
+          width={492}
+          height={276}
+          disable={timeLeft === 0}
+        />
+        <ClickableImage
           onClick={() =>
             handleImageSelect(currentPair.fakeImage, currentPair.id)
           }
-          className="disabled:cursor-not-allowed"
-          disabled={timeLeft === 0}
-        >
-          <Image
-            className="border-4 rounded-md border-violet-300 "
-            alt={currentPair.fakeImage}
-            src={currentPair.fakeImage}
-            width={492}
-            height={276}
-            fetchPriority="high"
-          />
-        </button>
+          src={currentPair.fakeImage}
+          alt="website image"
+          width={492}
+          height={276}
+          disable={timeLeft === 0}
+        />
       </div>
       <div className="md:min-h-[2rem] lg:min-h-[10rem] mt-2">
         {currentPairIndex < totalChances && timeLeft === 0 && (
           <div className="flex flex-col gap-4">
-            <button
-              className=" border-violet-500 border-2 px-4 py-2 rounded-lg hover:bg-violet-700 shadow-neon-glow"
-              onClick={handleNext}
-            >
+            <Button className="shadow-neon-glow" onClick={handleNext}>
               Lets try another one.
-            </button>
+            </Button>
           </div>
         )}
         {currentPairIndex >= totalChances && timeLeft === 0 && (
@@ -140,20 +110,22 @@ const Arena: React.FunctionComponent<IArenaProps> = () => {
               GAME OVER
             </h5>
             <div className="flex gap-4">
-              <button
-                className=" border-violet-500 border-2 px-4 py-2 rounded-lg shadow-neon-glow hover:bg-violet-500"
+              <Button
+                variant="primary"
+                className="shadow-neon-glow "
                 onClick={redirectToResults}
               >
-                View all result
-              </button>
-              <button
-                className=" border-gray-500 border-2 px-4 py-1 rounded-lg shadow-soft-elevate hover:bg-gray-500 hover:text-white"
+                View result
+              </Button>
+              <Button
+                variant="ghost"
+                className="shadow-soft-elevate"
                 onClick={() => {
                   router.reload();
                 }}
               >
                 Restart game
-              </button>
+              </Button>
             </div>
           </div>
         )}

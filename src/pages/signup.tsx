@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Input from "@src/components/Input";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import Input from "@components/Input";
 import { validateWithRegex } from "@src/utils";
 import { emailRegex, nameRegex } from "@src/utils/constants";
 
